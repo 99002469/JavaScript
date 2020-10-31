@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer registration</title>
+    <script src="DateFunction.js"></script> 
+    <script>
+        function showError(errEle, message){
+            $get(errEle).innerText = message;
+        }
+        function validation(){
+            /*Get the required inputs in the begining*/
+            let name = document.regForm.name.value;
+            let email = document.regForm.email.value;
+            let telephone = document.regForm.telephone.value;
+            let billingDate = document.regForm.billingDate.value;
+            let billingAmount = document.regForm.billingAmount.value;
+
+            /*Validating for right name*/
+            if(name == "" || name == null)
+            {
+                showError("errName", "*You cannot skip Name")
+                return false;
+            }
+            else
+            {
+                showError("errName", "")
+            }
+
+            /*Validating Email*/
+            if(email == "")
+            {
+                showError("errEmail", "*Email cannot be Blank")
+                return false;
+            }
+            else
+            {
+                showError("errEmail", "")
+            }
+            let regEx = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+            if(regEx.test(email) == false)
+            {
+                showError("errEmail", "*Invalid Email format, try entering the correct email")
+                return false;
+            } 
+            else 
+            {
+                showError("errEmail", "")
+            }
+
+            /*Validating Phone Number*/
+            if(telephone == "" || telephone == null)
+            {
+                showError("errPhone", "*Telephone cannot be Blank")
+                return false;
+            }
+            else
+            {
+                showError("errPhone", "")
+            }
+            
+            regEx = new RegExp("/^[1-9]\d{10}$/");
+            if(telephone == "" || (!regEx.test(telephone)))
+                return false;
+
+            /*Validating Billing Date*/
+
+            regEx = new RegExp("/^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}");
+            if(billingDate == ""||(!regEx.test(billingDate)))
+                return false;
+
+            /*Validating Billing Amount*/
+            if(billingAmount == "" || billingAmount == null)
+            {
+                showError("errAmount", "Please Enter the bill")
+                return false;
+            }
+            else
+            {
+                showError("errAmount", "")
+            }
+            regEx = new RegExp("^(0?[1-9]\d*\.\d\d|[1-9]\d*|0)$")
+            if(billingAmount == "" || (!regEx.test(billingAmount)))
+                return false;
+
+        }
+
+    </script>
+
+    <style>
+
+        body{
+            font-size: 16px;
+            background-color: whitesmoke;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        h1{
+          text-align: center;
+          text-decoration: solid;  
+        }
+
+        form{
+            width : 600px;
+            padding : 15px;
+            border : 2px solid greenyellow;
+            margin: 50px auto 0;
+            border-radius: 5px;  
+        }
+
+        label{
+            display:block;
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+
+        input, select{
+            border:1px solid green;
+            padding:10px;
+            display:block;
+            align-items: center;
+            width:80%;
+            border-radius: 5px;
+            align-content: center;
+        }
+
+        .bar{
+            padding-bottom: 10px;
+        }
+        .errText{
+            font-size:0.6em;
+            color :red;
+        }
+        button{
+            display:block;
+            align-content: center;
+            width:40%;
+            height: 40px;
+            border-color: green;
+            margin-top: 10px;
+           
+        }
+    
+    </style>
+
+</head>
+<body>
+    
+    <form action="" name="regForm" onvalidate="true" onsubmit="return validation()">
+        <h1> Customer Registration Form </h1>
+        <div class="bar">
+            <label for="name">First Name</label>
+            <input type="text" name="name" placeholder = "First Name"  id="name"/>
+            <div id="errName" class="errText"></div>
+        </div>
+        <div class="bar">
+            <label for="name">Last Name</label>
+            <input type="text" name="name"  placeholder = "Last Name"  id="name"/>
+            <div id="errName" class="errText"></div>
+        </div>
+
+        <div class="bar">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" placeholder = "Enter your Email"  id="email" />
+            <div id="errEmail" class="errText"></div>
+        </div>
+        <div class="bar">
+            <label for="telephone">Telephone</label>
+            <input type="text" id="telephone"  placeholder = "Enter your Telephone" name="telephone" />
+        </div>
+        <div class="bar">
+            <label for="billingDate">Billing Date:</label>
+            <input type="date" id="billDate"  placeholder = "Billing Date" name="billingDate">
+        </div>
+        <div class="bar">
+            <label for="billingAmount">Billing Amount</label>
+            <input type="number" id="amount"  placeholder = "Billing Amount in Rs."  name="billingAmount">
+        </div>
+        <button>Register</button>
+
+    </form>
+
+</body>
+</html>
